@@ -42,8 +42,8 @@ namespace Shady_Dam
                             if (map1[locY + 1][locX] != '#'){
                                 locY++;
                             }
-                            else if(map1[locY][locX+1] == '.'){
-
+                            else if(map1[locY][locX+1] == '#'){
+                                water -= 1;
                             }
                             else if(map1[locY][locX + 1] == 'A'){
 
