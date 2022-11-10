@@ -43,19 +43,15 @@ namespace Shady_Dam
                         while (water != 0)
                         {
                             if (map1[locY + 1][locX] != '#'){
-                                locY+=1; Console.WriteLine("went down 1");
+                                locY+=1; 
                             }
                             else if (map1[locY][locX + 1] != '#'){
-                                locX+=1; Console.WriteLine("went left 1");
+                                locX+=1; 
                             }
                             else if (map1[locY][locX + 1] == '#'){
                                 water -= 1;
                                 if (map1[locY][locX] == 'A'){
                                     flooded += 1;
-                                }
-                                else
-                                {
-                                    Console.WriteLine("not A and water disappeared.");
                                 }
                                 string temp = "";
                                 for(int c = 0; c < map1[locY].Length; c++)
@@ -70,7 +66,7 @@ namespace Shady_Dam
                                 locX = 0; locY = 0;
                             }
                         }
-                        Console.WriteLine($"There are {flooded} cities flooded");
+                        Console.WriteLine(flooded);
                         count = 0;
                         flooded = 0;
                         map1 = new List<string>();
