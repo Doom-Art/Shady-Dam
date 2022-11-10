@@ -15,13 +15,15 @@ namespace Shady_Dam
             if (File.Exists(@"mapTest.txt")){
                 int count = 0;
                 int water = 0;
+                int flooded = 0;
                 int columns; ///number of items in each line
                 int rows = 0; /// number of lines in the grid
                 foreach(string i in File.ReadLines(@"mapTest.txt", Encoding.UTF8))
                 {
                     if (count == 0){
-                        Int32.TryParse(i, out count);
+                        Int32.TryParse(i, out water);
                         count = 1;
+                        Console.WriteLine(i);
                     }
                     else if (count == 1){
                         Int32.TryParse(i, out columns);
@@ -32,23 +34,46 @@ namespace Shady_Dam
                         count = 3;
                     }
                     else if (count < (rows+ 3)){
-                        map1.Add(i);
+                        map1.Add(i + '#');
                         count += 1;
                     }
                     else{
+                        map1.Add("###########");
                         int locX = 0; int locY = 0;
-                        while (water < 0)
+                        while (water != 0)
                         {
                             if (map1[locY + 1][locX] != '#'){
-                                locY++;
+                                locY+=1; Console.WriteLine("went down 1");
                             }
-                            else if(map1[locY][locX+1] == '#'){
+                            else if (map1[locY][locX + 1] != '#'){
+                                locX+=1; Console.WriteLine("went left 1");
+                            }
+                            else if (map1[locY][locX + 1] == '#'){
                                 water -= 1;
-                            }
-                            else if(map1[locY][locX + 1] == 'A'){
-
+                                if (map1[locY][locX] == 'A'){
+                                    flooded += 1;
+                                }
+                                else
+                                {
+                                    Console.WriteLine("not A and water disappeared.");
+                                }
+                                string temp = "";
+                                for(int c = 0; c < map1[locY].Length; c++)
+                                {
+                                    if (c == locX){
+                                        temp += '#';
+                                    }
+                                    else
+                                        temp += map1[locY][c];
+                                }
+                                map1[locY] = temp;
+                                locX = 0; locY = 0;
                             }
                         }
+                        Console.WriteLine($"There are {flooded} cities flooded");
+                        count = 0;
+                        flooded = 0;
+                        map1 = new List<string>();
                     }
 
                 }
