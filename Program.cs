@@ -8,10 +8,6 @@ namespace Shady_Dam
         static void Main(string[] args)
         {
             List<string> map1 = new List<string>();
-            List<string> map2 = new List<string>();
-            List<string> map3 = new List<string>();
-            List<string> map4 = new List<string>();
-            List<string> map5 = new List<string>();
             if (File.Exists(@"mapTest.txt")){
                 int count = 0;
                 int water = 0;
@@ -23,7 +19,6 @@ namespace Shady_Dam
                     if (count == 0){
                         Int32.TryParse(i, out water);
                         count = 1;
-                        Console.WriteLine(i);
                     }
                     else if (count == 1){
                         Int32.TryParse(i, out columns);
