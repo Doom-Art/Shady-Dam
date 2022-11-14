@@ -1,4 +1,5 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System.Diagnostics.Metrics;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace Shady_Dam
@@ -10,6 +11,7 @@ namespace Shady_Dam
             List<string> map1 = new List<string>();
             if (File.Exists(@"mapTest.txt")){
                 int count = 0;
+                int counter = 0;
                 int water = 0;
                 int flooded = 0;
                 int columns; ///number of items in each line
@@ -33,7 +35,7 @@ namespace Shady_Dam
                         count += 1;
                     }
                     else{
-                        map1.Add("###########");
+                        map1.Add("#############");
                         int locX = 0; int locY = 0;
                         while (water != 0)
                         {
@@ -63,10 +65,40 @@ namespace Shady_Dam
                         }
                         Console.WriteLine(flooded);
                         count = 0;
+                        counter++;
                         flooded = 0;
                         map1 = new List<string>();
+                    }                   
+                }
+                if (counter != 5){
+                    map1.Add("#############");
+                    int locX = 0; int locY = 0;
+                    while (water != 0)
+                    {
+                        if (map1[locY + 1][locX] != '#'){
+                            locY += 1;
+                        }
+                        else if (map1[locY][locX + 1] != '#'){
+                            locX += 1;
+                        }
+                        else if (map1[locY][locX + 1] == '#'){
+                            water -= 1;
+                            if (map1[locY][locX] == 'A'){
+                                flooded += 1;
+                            }
+                            string temp = "";
+                            for (int c = 0; c < map1[locY].Length; c++){
+                                if (c == locX){
+                                    temp += '#';
+                                }
+                                else
+                                    temp += map1[locY][c];
+                            }
+                            map1[locY] = temp;
+                            locX = 0; locY = 0;
+                        }
                     }
-
+                    Console.WriteLine(flooded);
                 }
             }
         }
